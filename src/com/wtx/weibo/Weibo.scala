@@ -12,8 +12,7 @@ object Weibo {
   def fit(lst: List[Array[String]]): (Int, Int, Int) = {
     var most = (0, 0, 0)
     lst.foreach(userList => {
-      var denominator ,molecular = 0
-      println(userList(2) + "\t" + userList(3) + "\t" + userList(4))
+      var denominator, molecular = 0
       val forward_count = Integer.parseInt(userList(2))
       val comment_count = Integer.parseInt(userList(3))
       val like_count = Integer.parseInt(userList(4))
@@ -43,7 +42,7 @@ object Weibo {
   def main(args: Array[String]): Unit = {
     //train
     val path = "/Users/wutianxiong/Downloads/SafariDownload/Weibo Data/weibo_train_data.txt"
-    val lines = Source.fromFile(path).getLines.map(line => line.split("\t"))
+    val lines = Source.fromFile(path).getLines.map(_.split("\t"))
     var sortByUser = Map[String, List[Array[String]]]()
     lines.foreach(line => {
       if (sortByUser.contains(line(0))) {
@@ -60,11 +59,11 @@ object Weibo {
     val path_result = "/Users/wutianxiong/Downloads/SafariDownload/Weibo Data/weibo_result_data.txt"
     val writer = new PrintWriter(new File(path_result))
     Source.fromFile(path_predict).getLines
-      .map(line => line.split("\t"))
+      .map(_.split("\t"))
       .foreach(line => {
         val result = if (answer.get(line(0)) == null) (0, 0, 0) else answer.get(line(0)) match {
           case Some(truth) => truth
-          case None => (0, 0, 0)
+          case _ => (0, 0, 0)
         }
         writer.println(line(0) + "\t" + line(1) + "\t" + result._1 + "," + result._2 + "," + result._3)
       })
