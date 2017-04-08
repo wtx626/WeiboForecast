@@ -44,7 +44,7 @@ object Weibo {
     //train
     val path = "/Users/wutianxiong/Downloads/SafariDownload/Weibo Data/weibo_train_data.txt"
     val lines = Source.fromFile(path).getLines.map(line => line.split("\t"))
-    var sortByUser: Map[String, List[Array[String]]] = Map[String, List[Array[String]]]()
+    var sortByUser = Map[String, List[Array[String]]]()
     lines.foreach(line => {
       if (sortByUser.contains(line(0))) {
         List.concat(sortByUser.get(line(0)), line.tail)
@@ -53,7 +53,7 @@ object Weibo {
       }
     })
     //answer is the result of training [uid,[forward_count,comment_count,like_count]]
-    var answer: mutable.HashMap[String, (Int, Int, Int)] = mutable.HashMap[String, (Int, Int, Int)]()
+    var answer = mutable.HashMap[String, (Int, Int, Int)]()
     sortByUser.foreach(user => answer += (user._1 -> fit(user._2)))
     //predict
     val path_predict = "/Users/wutianxiong/Downloads/SafariDownload/Weibo Data/weibo_predict_data.txt"
